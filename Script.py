@@ -5,11 +5,11 @@
 class script(object):
     START_TXT = """<b><blockquote>ʜᴇʟʟᴏ {} 👋,</blockquote>
     
-I Aᴍ Lᴀᴛᴇꜱᴛ Aᴅᴠᴀɴᴄᴇᴅ Aɴᴅ Pᴏᴡᴇʀꜰᴜʟ Aᴜᴛᴏ Fɪʟᴛᴇʀ Bᴏᴛ. I Cᴀɴ Sʜᴀʀᴇ Aʟʟ Mᴀʀᴠᴇʟ Mᴏᴠɪᴇs & Eᴛᴄ...ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴀɴᴅ sᴇᴇ ᴍᴀɢɪᴄ 🪄
+I Aᴍ Lᴀᴛᴇꜱᴛ Aᴅᴠᴀɴᴄᴇᴅ Aɴᴅ Pᴏᴡᴇʀꜰᴜʟ Aᴜᴛᴏ Fɪʟᴛᴇʀ Bᴏᴛ. I Cᴀɴ Sʜᴀʀᴇ Aʟʟ Mᴀʀᴠᴇʟ Mᴏᴠɪᴇs & Eᴛᴄ... Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Aɴᴅ Sᴇᴇ ᴛʜᴇ Mᴀɢɪᴄ🪄
 
-Oᴜʀ Aɴᴏᴛʜᴇʀ Bᴏᴛ 🍁 - <a href="https://t.me/Aryas_Movies_Finder_Bot">𝐁𝐎𝐓</a>
+Oᴜʀ Aɴᴏᴛʜᴇʀ Bᴏᴛ 🍁 - <a href="https://t.me/Aryas_Movies_Finder_Bot">𝐁𝐎𝐓 (all Available)</a>
 
-POWERD BY - @Tugulu_Movies_999</b>"""
+POWERD BY - @Tugulu_Movies_999 🎀</b>"""
 
     CLONE_START_TXT = """<b><blockquote>ʜᴇʟʟᴏ {}, ᴍʏ ɴᴀᴍᴇ <a href=https://t.me/{}>{}</a></blockquote>
     
