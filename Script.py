@@ -9,7 +9,7 @@ I Aᴍ Lᴀᴛᴇꜱᴛ Aᴅᴠᴀɴᴄᴇᴅ Aɴᴅ Pᴏᴡᴇʀꜰᴜʟ Aᴜ�
 
 Oᴜʀ Aɴᴏᴛʜᴇʀ Bᴏᴛ 🍁 - <a href="https://t.me/Aryas_Movies_Finder_Bot">𝐁𝐎𝐓 (all Available)</a>
 
-POWERD BY - @Tugulu_Movies_999 🎀</b>"""
+POWERD BY - @Telugu_Movies_999 🎀</b>"""
 
     CLONE_START_TXT = """<b><blockquote>ʜᴇʟʟᴏ {}, ᴍʏ ɴᴀᴍᴇ <a href=https://t.me/{}>{}</a></blockquote>
     
