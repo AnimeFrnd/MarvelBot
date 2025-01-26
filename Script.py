@@ -5,13 +5,13 @@
 class script(object):
     START_TXT = """<b><blockquote>ʜᴇʟʟᴏ {} 👋,</blockquote>
     
-I Aᴍ Lᴀᴛᴇꜱᴛ Aᴅᴠᴀɴᴄᴇᴅ Aɴᴅ Pᴏᴡᴇʀꜰᴜʟ Aᴜᴛᴏ Fɪʟᴛᴇʀ Bᴏᴛ. I Cᴀɴ Sʜᴀʀᴇ Aʟʟ Mᴀʀᴠᴇʟ Mᴏᴠɪᴇs & Eᴛᴄ... Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Aɴᴅ Sᴇᴇ ᴛʜᴇ Mᴀɢɪᴄ🪄
+I Aᴍ Lᴀᴛᴇꜱᴛ Aᴅᴠᴀɴᴄᴇᴅ Aɴᴅ Pᴏᴡᴇʀꜰᴜʟ Aᴜᴛᴏ Fɪʟᴛᴇʀ Bᴏᴛ. I Cᴀɴ Sʜᴀʀᴇ "Aʟʟ Mᴀʀᴠᴇʟ Mᴏᴠɪᴇs" & Eᴛᴄ... Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ Aɴᴅ Sᴇᴇ ᴛʜᴇ Mᴀɢɪᴄ🪄
 
 Oᴜʀ Aɴᴏᴛʜᴇʀ Bᴏᴛ 🍁 - <a href="https://t.me/Aryas_Movies_Finder_Bot">𝐁𝐎𝐓</a> (ᴀʟʟ ᴀʀᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ✅) 
 
 POWERD BY - @Telugu_Movies_999 🎀
 
-Free 🙌💯 </b>"""
+Free 🙌💯 (Nᴏ Aᴅs😎) </b>"""
 
     CLONE_START_TXT = """<b><blockquote>ʜᴇʟʟᴏ {}, ᴍʏ ɴᴀᴍᴇ <a href=https://t.me/{}>{}</a></blockquote>
     
