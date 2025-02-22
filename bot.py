@@ -1,5 +1,6 @@
-# Don't Remove Credit @VJ_Botz
+# Don't Remove Credit @VJ_Botz 
 # Subscribe YouTube Channel For Amazing Bot @Tech_VJ
+
 # Ask Doubt on telegram @KingVJ01
 
 # Clone Code Credit : YT - @Tech_VJ / TG - @VJ_Bots / GitHub - @VJBots
@@ -32,7 +33,6 @@ ppath = "plugins/*.py"
 files = glob.glob(ppath)
 TechVJBot.start()
 loop = asyncio.get_event_loop()
-
 
 async def start():
     print('\n')
@@ -75,11 +75,12 @@ async def start():
             await k.delete()
         except:
             print("Make Your Bot Admin In File Channels With Full Rights")
-    try:
-        k = await TechVJBot.send_message(chat_id=AUTH_CHANNEL, text="**Bot Restarted**")
-        await k.delete()
-    except:
-        print("Make Your Bot Admin In Force Subscribe Channel With Full Rights")
+    for ch in AUTH_CHANNELS:  # Iterate through multiple auth channels
+        try:
+            k = await TechVJBot.send_message(chat_id=ch, text="**Bot Restarted**")
+            await k.delete()
+        except:
+            print(f"Make Your Bot Admin In Force Subscribe Channel {ch} With Full Rights")
     if CLONE_MODE == True:
         print("Restarting All Clone Bots.......")
         await restart_bots()
@@ -90,10 +91,8 @@ async def start():
     await web.TCPSite(app, bind_address, PORT).start()
     await idle()
 
-
 if __name__ == '__main__':
     try:
         loop.run_until_complete(start())
     except KeyboardInterrupt:
         logging.info('Service Stopped Bye 👋')
-
