@@ -22,7 +22,7 @@ CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHAN
 # Force subscription channels
 REQUEST_TO_JOIN_MODE = bool(environ.get('REQUEST_TO_JOIN_MODE', False))
 TRY_AGAIN_BTN = bool(environ.get('TRY_AGAIN_BTN', False))
-AUTH_CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('AUTH_CHANNEL', '').split() if ch]
+AUTH_CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('AUTH_CHANNEL', '-1002009379876 -1001713521586 -1001798300759').split() if ch]
 
 # Request and support settings
 REQST_CHANNEL = int(environ.get('REQST_CHANNEL_ID', '-1002456481410'))
