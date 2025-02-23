@@ -67,12 +67,10 @@ async def start(client, message):
     except:
         pass
 
-    # Check if user exists in DB
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
 
-    # AUTH_CHANNEL Subscription Check
     if AUTH_CHANNEL:
         try:
             btn = await is_subscribed(client, message, AUTH_CHANNEL)
@@ -80,7 +78,6 @@ async def start(client, message):
                 username = (await client.get_me()).username
                 start_param = message.command[1] if len(message.command) > 1 else "true"
                 btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start={start_param}")])
-
                 await message.reply_text(
                     text=f"<b>👋 Hello {message.from_user.mention},\n\nPlease join the required channels and then click 'Try Again'. 😇</b>",
                     reply_markup=InlineKeyboardMarkup(btn)
@@ -89,7 +86,6 @@ async def start(client, message):
         except Exception as e:
             logger.error(f"Subscription Check Error: {e}")
 
-    # If the user is subscribed, show welcome message
     reply_markup = InlineKeyboardMarkup([[
         InlineKeyboardButton("🛡️ Support", url="https://t.me/VJ_Support"),
         InlineKeyboardButton("📢 Updates", url="https://t.me/VJ_Updates")
@@ -104,7 +100,7 @@ async def start(client, message):
 
 async def is_subscribed(bot, query, channels):
     btn = []
-    for channel_id in channels if isinstance(channels, list) else [channels]:  # Ensure it's a list
+    for channel_id in channels if isinstance(channels, list) else [channels]:
         try:
             chat = await bot.get_chat(int(channel_id))
             await bot.get_chat_member(channel_id, query.from_user.id)
