@@ -59,7 +59,7 @@ PUBLIC_FILE_STORE = bool(environ.get('PUBLIC_FILE_STORE', True))
 CACHE_TIME = int(environ.get('CACHE_TIME', 1800))
 MSG_ALRT = environ.get('MSG_ALRT', 'Hi 🎀 Pookie ❤️')
 CUSTOM_FILE_CAPTION = environ.get("CUSTOM_FILE_CAPTION", None)
-
+IMDB_TEMPLATE = environ.get("IMDB_TEMPLATE", f"{script.IMDB_TEMPLATE_TXT}")
 # Storage settings
 if MULTIPLE_DATABASE:
     USER_DB_URI = DATABASE_URI
