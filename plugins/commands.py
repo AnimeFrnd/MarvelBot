@@ -85,7 +85,7 @@ async def start(client, message):
         )
         return
     
-    if AUTH_CHANNELS:
+if AUTH_CHANNELS:  # Make sure this exists before using AUTH_CHANNELS
     missing_channels = []
     btn = []
 
@@ -94,13 +94,13 @@ async def start(client, message):
             if not await is_subscribed(client, message, channel):
                 missing_channels.append(channel)
                 if REQUEST_TO_JOIN_MODE:
-                    invite_link = await client.create_chat_invite_link(chat_id=int(channel), creates_join_request=True)
+                    invite_link = await client.create_chat_invite_link(chat_id=channel, creates_join_request=True)
                 else:
-                    invite_link = await client.create_chat_invite_link(int(channel))
+                    invite_link = await client.create_chat_invite_link(chat_id=channel)
                 btn.append([InlineKeyboardButton(f"Join {channel}", url=invite_link.invite_link)])
         except Exception as e:
             print(f"Error in creating invite link for {channel}: {e}")
-            await message.reply_text(f"Make sure the bot is admin in {channel} with permission to create invite links.")
+            await message.reply_text(f"Make sure the bot is an admin in {channel} with permission to create invite links.")
             return
 
     if missing_channels:
@@ -118,7 +118,8 @@ async def start(client, message):
             reply_markup=InlineKeyboardMarkup(btn),
             parse_mode=enums.ParseMode.MARKDOWN
         )
-        return
+        return  # Ensure this return statement is properly indented
+
         
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         if PREMIUM_AND_REFERAL_MODE == True:
