@@ -85,33 +85,38 @@ async def start(client, message):
         )
         return
     
-async def force_subscribe(client, message):
-    btn = []
-    for channel in AUTH_CHANNELS:
-        try:
-            invite_link = await client.create_chat_invite_link(chat_id=int(channel))
-            btn.append([InlineKeyboardButton(f"Join {channel}", url=invite_link.invite_link)])
-        except Exception as e:
-            print(e)
-            continue  # Skip channels with errors
+async def not_joined(client: Client, message: Message):
+    buttons = [
+        [
+            InlineKeyboardButton("❃ Join Channel ❃", url=client.invitelink),
+            InlineKeyboardButton("❃ Join Channel ❃", url=client.invitelink2),
+        ],
+        [
+            InlineKeyboardButton("❃ Join Channel ❃", url=client.invitelink3),
+            #InlineKeyboardButton("❃ Join Channel ❃", url=client.invitelink4),
+        ]
+    ]
+    try:
+        buttons.append([
+            InlineKeyboardButton(
+                text='Try Again',
+                url=f"https://t.me/{client.username}?start={message.command[1]}"
+            )
+        ])
+    except IndexError:
+        pass
 
-    if btn:
-        await message.reply_text(
-            "**🚨 You need to join all required channels before using the bot!**",
-            reply_markup=InlineKeyboardMarkup(btn),
-        )
-        return
-        try:
-            btn = [[InlineKeyboardButton("ʙᴀᴄᴋᴜᴘ ᴄʜᴀɴɴᴇʟ", url=invite_link.invite_link)]]
-            if message.command[1] != "subscribe":
-                if REQUEST_TO_JOIN_MODE == True:
-                    if TRY_AGAIN_BTN == True:
-                        try:
-                            kk, file_id = message.command[1].split("_", 1)
-                            btn.append([InlineKeyboardButton("↻ ᴛʀʏ ᴀɢᴀɪɴ", callback_data=f"checksub#{kk}#{file_id}")])
-                        except (IndexError, ValueError):
-                            btn.append([InlineKeyboardButton("↻ ᴛʀʏ ᴀɢᴀɪɴ", url=f"https://t.me/{temp.U_NAME}?start={message.command[1]}")])
-                else:
+    await message.reply(
+        text=FORCE_MSG.format(
+            first=message.from_user.first_name,
+            last=message.from_user.last_name,
+            username=f'@{message.from_user.username}' if message.from_user.username else None,
+            mention=message.from_user.mention,
+            id=message.from_user.id
+        ),
+        reply_markup=InlineKeyboardMarkup(buttons),
+        quote=True
+    )else:
                     try:
                         kk, file_id = message.command[1].split("_", 1)
                         btn.append([InlineKeyboardButton("↻ ᴛʀʏ ᴀɢᴀɪɴ", callback_data=f"checksub#{kk}#{file_id}")])
