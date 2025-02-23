@@ -85,7 +85,7 @@ async def start(client, message):
         )
         return
     
-if AUTH_CHANNELS and any(not await is_subscribed(client, message, ch) for ch in AUTH_CHANNELS):
+async def force_subscribe(client, message):
     btn = []
     for channel in AUTH_CHANNELS:
         try:
