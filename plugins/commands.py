@@ -85,16 +85,22 @@ async def start(client, message):
         )
         return
     
-    if AUTH_CHANNEL and not await is_subscribed(client, message):
+if AUTH_CHANNELS and any(not await is_subscribed(client, message, ch) for ch in AUTH_CHANNELS):
+    btn = []
+    for channel in AUTH_CHANNELS:
         try:
-            if REQUEST_TO_JOIN_MODE == True:
-                invite_link = await client.create_chat_invite_link(chat_id=(int(AUTH_CHANNEL)), creates_join_request=True)
-            else:
-                invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
+            invite_link = await client.create_chat_invite_link(chat_id=int(channel))
+            btn.append([InlineKeyboardButton(f"Join {channel}", url=invite_link.invite_link)])
         except Exception as e:
             print(e)
-            await message.reply_text("Make sure Bot is admin in Forcesub channel")
-            return
+            continue  # Skip channels with errors
+
+    if btn:
+        await message.reply_text(
+            "**🚨 You need to join all required channels before using the bot!**",
+            reply_markup=InlineKeyboardMarkup(btn),
+        )
+        return
         try:
             btn = [[InlineKeyboardButton("ʙᴀᴄᴋᴜᴘ ᴄʜᴀɴɴᴇʟ", url=invite_link.invite_link)]]
             if message.command[1] != "subscribe":
