@@ -49,67 +49,70 @@ async def start(client, message):
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     if len(message.command) != 2:
         if PREMIUM_AND_REFERAL_MODE == True:
-            buttons = [[
-                InlineKeyboardButton('✌ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ✌', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
-            ],[
-                InlineKeyboardButton('Deals 😃', url='https://t.me/Vs_Best_Deals'),
-                InlineKeyboardButton('🫰Main Channel', url='https://t.me/Telugu_Movies_999')
-            ],[
-                InlineKeyboardButton('❤️‍🔥 ɢᴇᴛ ғʀᴇᴇ/ᴘᴀɪᴅ sᴜʙsᴄʀɪᴘᴛɪᴏɴ ❤️‍🔥', callback_data='subscription')
-            ],[
-                InlineKeyboardButton('Update Channel 🫡', url=CHNL_LNK),
-                InlineKeyboardButton('Movies Request Group 😇', url='https://t.me/+-duU_vRUZzswZDY1')
-            ]]
-        else:
-            buttons = [[
-                InlineKeyboardButton('✌ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ ✌', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
-            ],[
-                InlineKeyboardButton('Deals 😃', url='https://t.me/Vs_Best_Deals'),
-                InlineKeyboardButton('🫰Main Channel', url='https://t.me/Telugu_Movies_999')
-            ],[
-                InlineKeyboardButton('❤️‍🔥 ɢᴇᴛ ғʀᴇᴇ/ᴘᴀɪᴅ sᴜʙsᴄʀɪᴘᴛɪᴏɴ ❤️‍🔥', callback_data='subscription')
-            ],[
-                InlineKeyboardButton('Update Channel 🫡', url=CHNL_LNK),
-                InlineKeyboardButton('Movies Request Group 😇', url='https://t.me/+-duU_vRUZzswZDY1')
-            ]]
-        if CLONE_MODE == True:
-            buttons.append([InlineKeyboardButton('ᴄʀᴇᴀᴛᴇ ᴏᴡɴ ᴄʟᴏɴᴇ ʙᴏᴛ', callback_data='clone')])
-        reply_markup = InlineKeyboardMarkup(buttons)
-        m=await message.reply_sticker("CAACAgUAAxkBAAEKVaxlCWGs1Ri6ti45xliLiUeweCnu4AACBAADwSQxMYnlHW4Ls8gQMAQ") 
-        await asyncio.sleep(1)
-        await m.delete()
-        await message.reply_photo(
-            photo=random.choice(PICS),
-            caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-        return
+import os, string, logging, random, asyncio, time, datetime, re, sys, json, base64
+from Script import script
+from pyrogram import Client, filters, enums
+from pyrogram.errors import ChatAdminRequired, FloodWait, UserNotParticipant
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from database.users_chats_db import db
+from info import AUTH_CHANNEL, LOG_CHANNEL, PICS
+from utils import temp
+
+logger = logging.getLogger(__name__)
+
+@Client.on_message(filters.command("start") & filters.incoming)
+async def start(client, message):
+    try:
+        await message.react(emoji=random.choice(["🔥", "👋", "🎉"]), big=True)
+    except:
+        pass
+
+    # Check if user exists in DB
+    if not await db.is_user_exist(message.from_user.id):
+        await db.add_user(message.from_user.id, message.from_user.first_name)
+        await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
+
+    # AUTH_CHANNEL Subscription Check
     if AUTH_CHANNEL:
         try:
             btn = await is_subscribed(client, message, AUTH_CHANNEL)
             if btn:
                 username = (await client.get_me()).username
-                if message.command[1]:
-                    btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start={message.command[1]}")])
-                else:
-                    btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start=true")])
-                await message.reply_text(text=f"<b>👋 Hello {message.from_user.mention},\n\nPlease join the channel then click on try again button. 😇</b>", reply_markup=InlineKeyboardMarkup(btn))
+                start_param = message.command[1] if len(message.command) > 1 else "true"
+                btn.append([InlineKeyboardButton("♻️ Try Again ♻️", url=f"https://t.me/{username}?start={start_param}")])
+
+                await message.reply_text(
+                    text=f"<b>👋 Hello {message.from_user.mention},\n\nPlease join the required channels and then click 'Try Again'. 😇</b>",
+                    reply_markup=InlineKeyboardMarkup(btn)
+                )
                 return
         except Exception as e:
-            print(e)
-    
-        try:
-    async def is_subscribed(bot, query, channel):
+            logger.error(f"Subscription Check Error: {e}")
+
+    # If the user is subscribed, show welcome message
+    reply_markup = InlineKeyboardMarkup([[
+        InlineKeyboardButton("🛡️ Support", url="https://t.me/VJ_Support"),
+        InlineKeyboardButton("📢 Updates", url="https://t.me/VJ_Updates")
+    ]])
+
+    await message.reply_photo(
+        photo=random.choice(PICS),
+        caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
+        reply_markup=reply_markup,
+        parse_mode=enums.ParseMode.HTML
+    )
+
+async def is_subscribed(bot, query, channels):
     btn = []
-    for id in channel:
-        chat = await bot.get_chat(int(id))
+    for channel_id in channels if isinstance(channels, list) else [channels]:  # Ensure it's a list
         try:
-            await bot.get_chat_member(id, query.from_user.id)
+            chat = await bot.get_chat(int(channel_id))
+            await bot.get_chat_member(channel_id, query.from_user.id)
         except UserNotParticipant:
-            btn.append([InlineKeyboardButton(f'Join {chat.title}', url=chat.invite_link)])
+            invite_link = await bot.export_chat_invite_link(chat.id)
+            btn.append([InlineKeyboardButton(f'Join {chat.title}', url=invite_link)])
         except Exception as e:
-            pass
+            logger.error(f"Error checking subscription for {channel_id}: {e}")
     return btn
             
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
