@@ -104,17 +104,13 @@ async def start(client, message):
             return
 
     if missing_channels:
-        if message.command[1] != "subscribe":
-            try:
-                kk, file_id = message.command[1].split("_", 1)
-                btn.append([InlineKeyboardButton("↻ Try Again", callback_data=f"checksub#{kk}#{file_id}")])
-            except (IndexError, ValueError):
-                btn.append([InlineKeyboardButton("↻ Try Again", url=f"https://t.me/{temp.U_NAME}?start={message.command[1]}")])
+        try:
+            kk, file_id = message.command[1].split("_", 1)
+            btn.append([InlineKeyboardButton("↻ Try Again", callback_data=f"checksub#{kk}#{file_id}")])
+        except (IndexError, ValueError):
+            btn.append([InlineKeyboardButton("↻ Try Again", url=f"https://t.me/{temp.U_NAME}?start={message.command[1]}")])
 
-        if REQUEST_TO_JOIN_MODE:
-            text = "**🕵️ You must join all required channels before using this bot!**"
-        else:
-            text = "**🕵️ Please join all required channels first! Then try again.**"
+        text = "**🕵️ You must join all required channels before using this bot!**"
 
         await client.send_message(
             chat_id=message.from_user.id,
@@ -123,7 +119,7 @@ async def start(client, message):
             parse_mode=enums.ParseMode.MARKDOWN
         )
         return
-
+        
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         if PREMIUM_AND_REFERAL_MODE == True:
             buttons = [[
