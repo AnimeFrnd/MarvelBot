@@ -64,6 +64,9 @@ CUSTOM_FILE_CAPTION = environ.get("CUSTOM_FILE_CAPTION", None)
 IMDB = environ.get("IMDB", "https://www.imdb.com")
 IMDB_TEMPLATE = environ.get("IMDB_TEMPLATE", f"{script.IMDB_TEMPLATE_TXT}")
 
+# Missing Variable Added
+MELCOW_NEW_USERS = bool(environ.get("MELCOW_NEW_USERS", False))
+
 # Storage settings
 if MULTIPLE_DATABASE:
     USER_DB_URI = DATABASE_URI
