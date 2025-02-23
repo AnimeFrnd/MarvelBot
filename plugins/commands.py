@@ -85,19 +85,6 @@ async def start(client, message):
             parse_mode=enums.ParseMode.HTML
         )
         return
-    
-    async def is_subscribed(bot, query, channel):
-    btn = []
-    for id in channel:
-        chat = await bot.get_chat(int(id))
-        try:
-            await bot.get_chat_member(id, query.from_user.id)
-        except UserNotParticipant:
-            btn.append([InlineKeyboardButton(f'Join {chat.title}', url=chat.invite_link)])
-        except Exception as e:
-            pass
-    return btn
-        try:
     if AUTH_CHANNEL:
         try:
             btn = await is_subscribed(client, message, AUTH_CHANNEL)
@@ -111,7 +98,19 @@ async def start(client, message):
                 return
         except Exception as e:
             print(e)
-            return await message.reply_text("something wrong with force subscribe.")
+    
+        try:
+    async def is_subscribed(bot, query, channel):
+    btn = []
+    for id in channel:
+        chat = await bot.get_chat(int(id))
+        try:
+            await bot.get_chat_member(id, query.from_user.id)
+        except UserNotParticipant:
+            btn.append([InlineKeyboardButton(f'Join {chat.title}', url=chat.invite_link)])
+        except Exception as e:
+            pass
+    return btn
             
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         if PREMIUM_AND_REFERAL_MODE == True:
